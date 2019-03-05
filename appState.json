@@ -1,0 +1,226 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "5b771f78-7332-4a59-92b0-5ad87ceaab87": {
+        "id": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
+        "parent": null,
+        "name": "let",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "0a8f427f-dffc-4ed7-b4bc-725be4951855",
+          "2bd04705-0be3-4b49-b853-2595b4092d97"
+        ],
+        "isRemovable": false,
+        "filePath": "let"
+      },
+      "0a8f427f-dffc-4ed7-b4bc-725be4951855": {
+        "id": "0a8f427f-dffc-4ed7-b4bc-725be4951855",
+        "parent": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
+        "name": "lambda.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "let/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nconst ddb = new AWS.DynamoDB.DocumentClient();\n\nexports.handler = function (event, context, callback) {\n    ddb.put({\n        TableName: 'Student',\n        Item: { 'ID': 1 }\n    }).promise().then(function (data) {\n        //your logic goes here\n    }).catch(function (err) {\n        //handle error\n    });\n\n    callback(null, { \"message\": \"Successfully executed\" });\n}",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        },
+        "testCases": {
+          "70ef5ab1-c651-47e7-999a-e04ba3457e21": {
+            "id": "70ef5ab1-c651-47e7-999a-e04ba3457e21",
+            "name": "Unnamed event",
+            "functionId": "0a8f427f-dffc-4ed7-b4bc-725be4951855",
+            "event": "{\n    \"key1\": \"value1\",\n    \"key2\": \"value2\",\n    \"key3\": \"value3\"\n}"
+          }
+        }
+      },
+      "2bd04705-0be3-4b49-b853-2595b4092d97": {
+        "id": "2bd04705-0be3-4b49-b853-2595b4092d97",
+        "parent": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
+        "name": "publishNewBark.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "let/publishNewBark.js",
+        "code": "var AWS = require(\"aws-sdk\");\nvar sns = new AWS.SNS();\n\nexports.handler = (event, context, callback) => {\n\n    event.Records.forEach((record) => {\n        console.log('Stream record: ', JSON.stringify(record, null, 2));\n if (record.eventName == 'INSERT') {\n        sns.publish({\n            Message: 'Testing',\n            Subject: 'Test',\n            MessageAttributes: {},\n            MessageStructure: 'String',\n            TopicArn: 'arn:aws:sns:us-east-1:318300609668:dynamodb'\n        }).promise()\n            .then(data => {\n                // your code goes here\n            })\n            .catch(err => {\n                // error handling goes here\n            });\n        }\n    });\n    callback(null, `Successfully processed ${event.Records.length} records.`);\n};",
+        "triggers": [
+          {
+            "resourceName": "ddbStudent",
+            "config": {
+              "StartingPosition": "TRIM_HORIZON",
+              "BatchSize": 100,
+              "StreamViewType": "NEW_IMAGE"
+            }
+          }
+        ],
+        "config": {
+          "runtime": "nodejs8.10",
+          "handler": "handler",
+          "timeout": 60,
+          "memory": 128,
+          "layers": []
+        }
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
+    "openFiles": [
+      "0a8f427f-dffc-4ed7-b4bc-725be4951855",
+      "2bd04705-0be3-4b49-b853-2595b4092d97"
+    ],
+    "currentFileId": "2bd04705-0be3-4b49-b853-2595b4092d97",
+    "resources": {
+      "ddbStudent": {
+        "name": "ddbStudent",
+        "type": "DynamoDB",
+        "config": {
+          "mode": 0,
+          "table": {
+            "arn": "",
+            "name": "Student",
+            "partitionKey": "ID",
+            "partitionKeyType": "N",
+            "hasSortKey": false,
+            "sortKey": "",
+            "sortKeyType": "S",
+            "mode": 0
+          },
+          "parameters": {
+            "mode": 0,
+            "table": {
+              "arn": "",
+              "name": "Student",
+              "partitionKey": "ID",
+              "partitionKeyType": "N",
+              "hasSortKey": false,
+              "sortKey": "",
+              "sortKeyType": "S",
+              "mode": 0
+            },
+            "parameters": {
+              "mode": 0,
+              "operation": "put",
+              "table": {
+                "arn": "",
+                "name": "New",
+                "partitionKey": "ID",
+                "partitionKeyType": "N",
+                "hasSortKey": false,
+                "sortKey": "",
+                "sortKeyType": "S",
+                "mode": 0
+              },
+              "parameters": {
+                "Key": {},
+                "Item": {
+                  "ID": "1"
+                },
+                "ExpressionAttributeValues": {}
+              },
+              "triggerParams": {},
+              "validator": {
+                "validatableFields": {},
+                "validity": true
+              },
+              "valid": true,
+              "triggerConfig": {
+                "StartingPosition": "TRIM_HORIZON",
+                "BatchSize": 100,
+                "StreamViewType": "NEW_IMAGE"
+              },
+              "TableName": "New"
+            },
+            "triggerParams": {
+              "StartingPosition": "TRIM_HORIZON",
+              "BatchSize": 100,
+              "StreamViewType": "NEW_IMAGE"
+            },
+            "validator": {
+              "validatableFields": {},
+              "validity": true
+            },
+            "valid": true,
+            "triggerConfig": {
+              "StartingPosition": "TRIM_HORIZON",
+              "BatchSize": 100,
+              "StreamViewType": "NEW_IMAGE"
+            },
+            "TableName": "Student"
+          },
+          "triggerParams": {
+            "StartingPosition": "TRIM_HORIZON",
+            "BatchSize": 100,
+            "StreamViewType": "NEW_IMAGE"
+          },
+          "validator": {
+            "validatableFields": {},
+            "validity": true
+          },
+          "valid": true
+        },
+        "globallyEditable": false
+      },
+      "snsusEast1dynamodb": {
+        "name": "snsusEast1dynamodb",
+        "type": "SNS",
+        "config": {
+          "topicMode": 1,
+          "topicName": "dynamodb",
+          "topicArn": "arn:aws:sns:us-east-1:318300609668:dynamodb",
+          "topicRegion": "us-east-1",
+          "snsType": 0,
+          "subscriptions": []
+        },
+        "globallyEditable": true
+      }
+    },
+    "customTemplate": {
+      "dialect": null,
+      "definitions": {}
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "aws-sdk": {
+          "name": "aws-sdk",
+          "version": "2.176.0",
+          "dev": true,
+          "notRemovable": false
+        }
+      }
+    }
+  },
+  "PROJECT_META": {
+    "projectName": "let",
+    "projectDescription": "",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1551785409134
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "let",
+      "url": "https://github.com/Kumudikatest/DynamoDBTrigger"
+    }
+  }
+}
