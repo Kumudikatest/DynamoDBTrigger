@@ -18,7 +18,7 @@
         "id": "0a8f427f-dffc-4ed7-b4bc-725be4951855",
         "parent": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
         "name": "lambda.js",
-        "type": "LAMBDA_FILE",
+        "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
@@ -45,7 +45,7 @@
         "id": "2bd04705-0be3-4b49-b853-2595b4092d97",
         "parent": "5b771f78-7332-4a59-92b0-5ad87ceaab87",
         "name": "publishNewBark.js",
-        "type": "LAMBDA_FILE",
+        "type": "JS_LAMBDA",
         "isDirectory": false,
         "children": [],
         "isRemovable": true,
@@ -184,7 +184,7 @@
     },
     "customTemplate": {
       "dialect": null,
-      "definitions": {}
+      "definitions": null
     },
     "envVariables": [
       {
@@ -202,7 +202,8 @@
           "name": "aws-sdk",
           "version": "2.176.0",
           "dev": true,
-          "notRemovable": false
+          "notRemovable": false,
+          "language": "javascript"
         }
       }
     }
@@ -214,7 +215,7 @@
     "projectRegion": "us-east-1",
     "platform": "AWS",
     "platformRegions": {},
-    "lastSave": 1551785409134
+    "lastSave": 1567072156110
   },
   "VCS_STATE": {
     "provider": "GitHub",
